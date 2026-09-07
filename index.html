@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Validation</title>
+</head>
+<body>
+
+<h2>Registration Form</h2>
+
+<form id="registerForm">
+    <label>Name:</label>
+    <input type="text" id="name">
+    <span id="nameError"></span>
+    <br><br>
+
+    <label>Email:</label>
+    <input type="text" id="email">
+    <span id="emailError"></span>
+    <br><br>
+
+    <label>Password:</label>
+    <input type="password" id="password">
+    <span id="passwordError"></span>
+    <br><br>
+
+    <label>Age:</label>
+    <input type="number" id="age">
+    <span id="ageError"></span>
+    <br><br>
+
+    <button type="submit">Register</button>
+</form>
+
+<script>
+const form = document.getElementById("registerForm");
+
+form.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    // Get values
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const age = document.getElementById("age").value;
+
+    // Clear previous errors
+    document.getElementById("nameError").textContent = "";
+    document.getElementById("emailError").textContent = "";
+    document.getElementById("passwordError").textContent = "";
+    document.getElementById("ageError").textContent = "";
+
+    let valid = true;
+
+    // Name validation
+    if (name === "") {
+        document.getElementById("nameError").textContent =
+            "Name is required";
+        valid = false;
+    }
+
+    // Email validation
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (email === "") {
+        document.getElementById("emailError").textContent =
+            "Email is required";
+        valid = false;
+    } else if (!emailPattern.test(email)) {
+        document.getElementById("emailError").textContent =
+            "Enter a valid email";
+        valid = false;
+    }
+
+    // Password validation
+    if (password.length < 8) {
+        document.getElementById("passwordError").textContent =
+            "Password must contain at least 8 characters";
+        valid = false;
+    }
+
+    // Age validation
+    if (age === "") {
+        document.getElementById("ageError").textContent =
+            "Age is required";
+        valid = false;
+    } else if (age < 18) {
+        document.getElementById("ageError").textContent =
+            "Age must be 18 or above";
+        valid = false;
+    }
+
+    // Final result
+    if (valid) {
+        alert("Registration successful!");
+        form.submit();
+    }
+});
+</script>
+
+</body>
+</html>
